@@ -1,0 +1,15 @@
+[Unit]
+Description=rbd-update-bot -- Diun-triggered update pipeline with Matrix approval gate
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=rbdroot
+WorkingDirectory=/home/rbdroot/rbd-update-bot
+ExecStart=/home/rbdroot/rbd-update-bot/.venv/bin/python -m rbd_update_bot.main
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

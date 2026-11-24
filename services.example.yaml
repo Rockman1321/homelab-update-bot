@@ -1,0 +1,126 @@
+services:
+  immich:
+    vmid: 501
+    ssh_host: "immich.example.com"
+    ssh_user: "rbdroot"
+    images:
+      - "ghcr.io/immich-app/immich-server"
+      - "ghcr.io/immich-app/immich-machine-learning"
+    release_source:
+      type: github
+      repo: "immich-app/immich"
+    registry:
+      type: ghcr
+      repo: "immich-app/immich-server"
+    portainer:
+      base_url: "https://immich.example.com:9443"
+      stack_name: "immich"
+    db_backup:
+      base_url: "https://immich.example.com"
+    kopia:
+      enabled: true
+      ssh_host: "immich.example.com"
+      systemd_service: "kopia-snapshot.service"
+    log_watch_containers:
+      - "immich_server"
+      - "immich_machine_learning"
+    current_version: "v3.2.0"
+
+  nextcloud:
+    vmid: 510
+    ssh_host: "nextcloud.example.com"
+    ssh_user: "rbdroot"
+    compose_dir: "/opt/nextcloud"
+    images:
+      - "nextcloud"
+    release_source:
+      type: github
+      repo: "nextcloud-releases/server"
+    registry:
+      type: dockerhub
+      repo: "library/nextcloud"
+    kopia:
+      enabled: true
+      ssh_host: "nextcloud.example.com"
+      systemd_service: "kopia-snapshot.service"
+    log_watch_containers:
+      - "nextcloud-app-1"
+      - "nextcloud-cron-1"
+    occ_container: "nextcloud-app-1"
+    cf_tunnel:
+      kind: container
+      name: "cloudflared-nextcloud"
+    db_backup:
+      container: "nextcloud-db-1"
+    current_version: "31.0.14"
+
+  joplin:
+    vmid: 502
+    ssh_host: "joplin.example.com"
+    ssh_user: "rbdroot"
+    compose_dir: "/opt/joplin-server"
+    images:
+      - "joplin/server"
+    release_source:
+      type: github
+      repo: "laurent22/joplin"
+    kopia:
+      enabled: false
+    log_watch_containers:
+      - "joplin_server"
+    current_version: "3.6.1"
+    uptime_kuma:
+      maintenance_id: 1
+
+  matrix:
+    vmid: 504
+    ssh_host: "matrix.example.com"
+    ssh_user: "rbdroot"
+    compose_dir: "/opt/matrix"
+    images:
+      - "forgejo.ellis.link/continuwuation/continuwuity"
+    release_source:
+      type: forgejo
+      host: "https://forgejo.ellis.link"
+      repo: "continuwuation/continuwuity"
+    kopia:
+      enabled: false
+    log_watch_containers:
+      - "conduwuit"
+      - "livekit"
+      - "lk-jwt-service"
+    current_version: "v26.8.1"
+
+  discourse:
+    vmid: 506
+    ssh_host: "192.168.50.193"
+    ssh_user: "rbdroot"
+    launcher: true
+    launcher_dir: "/var/discourse"
+    images:
+      - "discourse/base"
+    release_source:
+      type: discourse_commits
+    kopia:
+      enabled: false
+    log_watch_containers:
+      - "app"
+
+  mass:
+    vmid: 505
+    ssh_host: "192.168.20.225"
+    ssh_user: "rbdroot"
+    compose_dir: "/opt/music-assistant"
+    images:
+      - "ghcr.io/music-assistant/server"
+    release_source:
+      type: github
+      repo: "music-assistant/server"
+    registry:
+      type: ghcr
+      repo: "music-assistant/server"
+    kopia:
+      enabled: false
+    log_watch_containers:
+      - "music-assistant-server"
+    current_version: "2.9.10"

@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.db
+.env
+config.yaml
+services.yaml
+compose-backups/
+env-backups/
+fortigate-backups/

@@ -1,0 +1,206 @@
+webhook:
+  host: "0.0.0.0"
+  port: 8420
+
+dashboard:
+  port: 8421
+
+matrix:
+  homeserver: "https://matrix.example.com"
+  user_id: "@update-bot:example.com"
+  room_id: "!TODO:example.com"
+  admin_user_ids:
+    - "@TODO:example.com"
+
+proxmox:
+  api_host: "https://rbd-pmx1.example.com:8006"
+  verify_tls: true
+
+pbs:
+  api_host: "https://192.168.20.5:8007"
+  verify_tls: true
+  datastore: "wd-usb"
+
+monitoring:
+  host: "192.168.50.20"
+  ssh_user: "rbdroot"
+  uptime_kuma_base_url: "http://192.168.50.20:3001"
+
+mgmt:
+  host: "192.168.50.10"
+  ssh_user: "rbdroot"
+
+bot_host:
+  ssh_host: "192.168.50.21"
+  ssh_user: "rbdroot"
+  install_dir: "/home/rbdroot/rbd-update-bot"
+
+security_scan:
+  interval_hours: 24
+  extra_hosts:
+    - name: "rbd-wg-server"
+      ssh_host: "192.168.50.253"
+      ssh_user: "rbdroot"
+      note: "WireGuard server -- also run 'wg show' and flag anything unexpected: an unfamiliar new peer, or a previously-idle peer suddenly showing a fresh handshake."
+
+fortigate:
+  api_host: "https://192.168.50.1:4443"
+  token_file: "/home/rbdroot/.config/rbd-security-scan/fortigate_token"
+  advisory_check_interval_hours: 24
+  advisory_research_max_age_hours: 168
+
+omada:
+  config_file: "/home/rbdroot/.config/rbd-security-scan/omada_config.txt"
+
+github:
+  repo: "your-github-user/your-bot-repo"
+  issue_token_file: "/home/rbdroot/.config/rbd-security-scan/github_issue_token"
+
+network_monitor:
+  interval_minutes: 15
+
+firewall_traffic:
+  interval_minutes: 15
+
+scheduled_maintenance:
+  enabled: false
+  weekday: 5
+  start_hour: 1
+  window_hours: 5
+  poll_minutes: 30
+  summary_hours_before: 6.0
+  reminder_interval_hours: 1.5
+  backup_max_age_hours: 12.0
+  fg_session_threshold: 10
+  services: []
+
+nightly_auto_apply:
+  enabled: false
+  start_hour: -1
+  window_hours: 4.0
+  poll_minutes: 15
+  backup_max_age_hours: 12.0
+  fg_session_threshold: 10
+  services: []
+  security_fast_track: false
+
+emergency_containment:
+  enabled: false
+  services: []
+  advisory_domains:
+    nextcloud: ["github.com/nextcloud-releases", "nextcloud.com", "nvd.nist.gov"]
+
+kernel_cve_watch:
+  enabled: false
+  interval_hours: 24
+  research_max_age_hours: 168
+  backup_max_age_hours: 12.0
+
+docker_prune:
+  enabled: false
+  interval_hours: 24
+  notify_threshold_mb: 500
+
+wifi_rf:
+  enabled: false
+  interval_hours: 0.25
+  watched_macs:
+    - "00:00:5e:00:53:01"
+  sustained_samples: 4
+  inter_util_threshold: 20.0
+  busy_util_threshold: 60.0
+  retry_rate_threshold: 15.0
+  watched_rssi_threshold: -70.0
+
+wireguard:
+  ssh_host: "192.168.50.253"
+  ssh_user: "rbdroot"
+
+disk_health:
+  interval_hours: 4
+
+discourse_backup_pull:
+  interval_hours: 24
+  retention_days: 90
+  staleness_hours: 216
+
+cloudflare_traffic:
+  account_id: ""
+  tunnel_ids: {}
+  interval_hours: 6
+  zones:
+    - zone_id: ""
+      hostnames: []
+
+coordination:
+  room_id: ""
+  pass_bot_user_id: "@pass-bot:example.com"
+  pass_bot_mailboxes: ["owner@example.com", "bills@example.com", "subscriptions@example.com"]
+
+graph_monitor:
+  mailbox_user_ids: []
+  interval_hours: 1
+  admin_user_principal_name: ""
+
+librenms_monitor:
+  api_host: ""
+  interval_minutes: 15
+
+homeassistant:
+  api_host: ""
+  interval_hours: 12
+
+external_reachability:
+  interval_minutes: 15
+  pause_during_maintenance:
+    discourse: ["hub.example.org"]
+
+kb_access_sync:
+  immich_base_url: ""
+  access_group_id: ""
+  interval_hours: 0
+
+kb_access_monitor:
+  app_id: ""
+  admin_room_id: ""
+  admin_bot_user_id: ""
+  interval_minutes: 0
+  window_hours: 1.0
+  new_logins_warn_threshold: 10
+  new_registrations_warn_threshold: 3
+
+kb_lockdown:
+  loose_policy_id: ""
+  strict_policy_id: ""
+  registration_token_max_uses: 0
+  registration_token_rotate_at_remaining: 1
+
+wedding_access_request:
+  app_id: ""
+  policy_id: ""
+  grant_days: 30
+  expiry_check_interval_hours: 0
+  wedding_date: ""
+  hub_db_path: "/opt/wedding-hub/wedding_hub.db"
+  room_id: ""
+
+daily_briefing:
+  morning_hour: -1
+  evening_hour: -1
+  poll_interval_minutes: 15
+
+synology:
+  config_file: "/home/rbdroot/.config/rbd-security-scan/synology_config.txt"
+
+llm:
+  provider: "anthropic"
+  model: "claude-sonnet-5"
+  light_model: "claude-haiku-5-5"
+  local_fallback_model: "qwen3.5:4b"
+
+log_watch:
+  duration_seconds: 300
+  poll_interval_seconds: 10
+
+database:
+  path: "state.db"
